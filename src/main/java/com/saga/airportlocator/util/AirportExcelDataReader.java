@@ -86,7 +86,7 @@ public class AirportExcelDataReader implements AirportDataReader {
     }
 
     @Override
-    public List<AirportInfo> fetchAirPortsInfo() throws Exception {
+    public List<AirportInfo> readAirPortsInfo() throws Exception {
         return airportsInfo;
     }
 

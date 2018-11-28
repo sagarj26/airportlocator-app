@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface AirportDataReader {
 
-    List<AirportInfo> fetchAirPortsInfo() throws Exception;
+    List<AirportInfo> readAirPortsInfo() throws Exception;
 }

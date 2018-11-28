@@ -25,6 +25,6 @@ public class AirportDataExcelImpl implements AirportData {
 
     @Override
     public List<AirportInfo> fetchAirportsInfo() throws Exception {
-        return airportDataReader.fetchAirPortsInfo();
+        return airportDataReader.readAirPortsInfo();
     }
 }
