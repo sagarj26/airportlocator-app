@@ -6,10 +6,8 @@
 package com.saga.airportlocator.util;
 
 import com.saga.airportlocator.model.AirportInfo;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,8 +18,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,15 +29,10 @@ public class AirportExcelDataReader implements AirportDataReader {
 
     List<AirportInfo> airportsInfo;
 
-    @Value("classpath:Airport_details_1.xlsx")
-    private Resource res;
-
     @PostConstruct
     public void init() throws IOException {
-        URL resource = res.getURL();
-        String fileName = resource.getFile();
-        try (FileInputStream inputStream = new FileInputStream(new File(resource.getFile()));
-                Workbook workbook = getWorkbook(inputStream, fileName)) {
+        try (InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("Airport_details_1.xlsx");
+                Workbook workbook = getWorkbook(resourceAsStream, "Airport_details_1.xlsx")) {
 
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = firstSheet.iterator();
@@ -99,7 +90,7 @@ public class AirportExcelDataReader implements AirportDataReader {
         return airportsInfo;
     }
 
-    private Workbook getWorkbook(FileInputStream inputStream, String excelFilePath) throws IOException {
+    private Workbook getWorkbook(InputStream inputStream, String excelFilePath) throws IOException {
         Workbook workbook = null;
         if (excelFilePath.endsWith("xlsx")) {
             workbook = new XSSFWorkbook(inputStream);
